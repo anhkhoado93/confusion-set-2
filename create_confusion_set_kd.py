@@ -1,5 +1,6 @@
 import os
-from typing import Callable, List, Dict
+from tokenize import single_quoted
+from typing import Callable, List, Dict, Tuple
 
 TelexDict = Dict[str, str]
 
@@ -43,8 +44,9 @@ single_telex_composition = {
     "ỷ": ["y","r"],"ỹ": ["y","x"],
     "ỵ": ["y","j"] 
     }
-double_telex_pattern = ["ươ","ướ","ườ","ưở","ưỡ","ượ"]
-single_telex_pattern = single_telex_composition.keys()
+double_telex_pattern: set = ["ươ","ướ","ườ","ưở","ưỡ","ượ"]
+single_telex_pattern: set = set(single_telex_composition.keys())
+single_vowel: set = single_telex_pattern.update(set("a", "e", "i", "o", "u", "y"))
 
 def remove_duplicate(mylist):
     return list(dict.fromkeys(mylist))
@@ -125,8 +127,8 @@ def decompose_to_telex(word):
             word_composition["extra"] = extra
             return word_composition
     return word_composition
-        
-def create_confusion_set(vocab: Dict[str, TelexDict], 
+
+def create_confusion_set_kd(vocab: Dict[str, TelexDict], 
             heuristic_f: Callable[[TelexDict, TelexDict], bool],
             MAX_SET=100 ) -> Dict[str, List]:
     """
