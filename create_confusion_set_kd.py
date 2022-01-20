@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 from tokenize import single_quoted
 from typing import Callable, List, Dict, Tuple
@@ -46,7 +47,6 @@ single_telex_composition = {
     }
 double_telex_pattern: set = ["ươ","ướ","ườ","ưở","ưỡ","ượ"]
 single_telex_pattern: set = set(single_telex_composition.keys())
-single_vowel: set = single_telex_pattern.update(set(("a", "e", "i", "o", "u", "y")))
 
 def remove_duplicate(mylist):
     return list(dict.fromkeys(mylist))
@@ -129,7 +129,7 @@ def decompose_to_telex(word):
     return word_composition
 
 def create_confusion_set_kd(vocab: Dict[str, TelexDict], 
-            heuristic_f: Callable[[TelexDict, TelexDict], bool],
+            heuristic_f: Callable[[str, str, Dict[str, List]], bool],
             MAX_SET=100 ) -> Dict[str, List]:
     """
     Create a confusion set based on heuristiscal functions.
@@ -145,8 +145,8 @@ def create_confusion_set_kd(vocab: Dict[str, TelexDict],
         confusion_list = []
         for another_word in vocab:
             if word == another_word: continue
-            is_ok = heuristic_f(vocab[word], \
-                            vocab[another_word])
+            is_ok = heuristic_f(word, \
+                            another_word,vocab)
             if is_ok: 
                 confusion_list.append(another_word)
         confusion_set[word] = confusion_list
