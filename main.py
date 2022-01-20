@@ -3,9 +3,11 @@ import pickle
 
 
 if __name__ == "__main__":
-    full_vocab = load_vocab("./all-vietnamese-syllables.txt")
-    common_vocab = load_vocab("./common-vietnamese-syllables.txt")
-    full_vocab_telex_dict = {x: decompose_to_telex(x) for x in full_vocab}
+    cwd = os.getcwd()
+    fvp = os.path.join(cwd, "confusion-set/all-vietnamese-syllables.txt")
+    fvp2 = os.path.join(cwd, "confusion-set/common-vietnamese-syllables.txt")
+    full_vocab = load_vocab(fvp)
+    common_vocab = load_vocab(fvp2)    full_vocab_telex_dict = {x: decompose_to_telex(x) for x in full_vocab}
 
     # Confusion set with keystroke of 2
     full_confusion_set_2 = create_confusion_set_kd(full_vocab_telex_dict, m_keystroke_distance_2)
