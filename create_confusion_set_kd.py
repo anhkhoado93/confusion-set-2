@@ -46,7 +46,7 @@ single_telex_composition = {
     }
 double_telex_pattern: set = ["ươ","ướ","ườ","ưở","ưỡ","ượ"]
 single_telex_pattern: set = set(single_telex_composition.keys())
-single_vowel: set = single_telex_pattern.update(set("a", "e", "i", "o", "u", "y"))
+single_vowel: set = single_telex_pattern.update(set(("a", "e", "i", "o", "u", "y")))
 
 def remove_duplicate(mylist):
     return list(dict.fromkeys(mylist))
