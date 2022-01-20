@@ -1,5 +1,5 @@
 from create_confusion_set_kd import *
-
+import pickle
 
 
 if __name__ == "__main__":
@@ -22,5 +22,15 @@ if __name__ == "__main__":
         confusion_set = full_confusion_set_with_common_word_1[word]
         new_confusion_set = [c for c in confusion_set if c in common_vocab]
         full_confusion_set_with_common_word_1[word] = new_confusion_set
+
+
+    with open('full_confusion_set_2.pickle', 'wb') as handle:
+        pickle.dump(full_confusion_set_2, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open('full_confusion_set_1.pickle', 'wb') as handle:
+        pickle.dump(full_confusion_set_1, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open('full_confusion_set_with_common_word_1.pickle', 'wb') as handle:
+        pickle.dump(full_confusion_set_with_common_word_1, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open('full_confusion_set_with_common_word_2.pickle', 'wb') as handle:
+        pickle.dump(full_confusion_set_with_common_word_2, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     # Confusion set with regional dialects
