@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from tokenize import single_quoted
-from typing import Callable, List, Dict, Tuple
+from typing import Callable, List, Dict, Tuple, Set
 
 TelexDict = Dict[str, str]
 
@@ -152,7 +152,29 @@ def create_confusion_set_kd(vocab: Dict[str, TelexDict],
         confusion_set[word] = confusion_list
     return confusion_set
 
-
+def create_confusion_set_ed(vocab: Set[str], 
+            heuristic_f: Callable[[str, str, Dict[str, List]], bool],
+            MAX_SET=100 ) -> Dict[str, List]:
+    """
+    Create a confusion set based on heuristiscal functions.
+    ----------
+    Args:
+        vocab: list of vocabulary
+        heuristic_f: (original, confuse) -> boolean
+    Returns:
+       Python dictionary, { "word": ["confusion", "set"], ... }
+    """
+    confusion_set = vocab
+    for word in confusion_set:
+        confusion_list = []
+        for another_word in vocab:
+            if word == another_word: continue
+            is_ok = heuristic_f(word, \
+                            another_word)
+            if is_ok: 
+                confusion_list.append(another_word)
+        confusion_set[word] = confusion_list
+    return confusion_set
 
 
 #################### HEURISTICS ####################
@@ -174,9 +196,11 @@ def m_edit_distance_1(word: str, another: str) -> bool:
 def m_edit_distance_2(word: str, another: str) -> bool:
     ed = DP5(word, another)
     return ed <= 2
+
 def m_edit_distance_3(word: str, another: str) -> bool:
     ed = DP5(word, another)
     return ed <= 3
+    
 def m_edit_distance(word: str, another: str, m_distance) -> bool:
     ed = DP5(word, another)
     return ed <= m_distance
