@@ -164,7 +164,7 @@ def create_confusion_set_ed(vocab: Set[str],
     Returns:
        Python dictionary, { "word": ["confusion", "set"], ... }
     """
-    confusion_set = vocab
+    confusion_set = dict.fromkeys(vocab)
     for word in confusion_set:
         confusion_list = []
         for another_word in vocab:
