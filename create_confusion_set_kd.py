@@ -174,7 +174,9 @@ def m_edit_distance_1(word: str, another: str) -> bool:
 def m_edit_distance_2(word: str, another: str) -> bool:
     ed = DP5(word, another)
     return ed <= 2
-
+def m_edit_distance_3(word: str, another: str) -> bool:
+    ed = DP5(word, another)
+    return ed <= 3
 def m_edit_distance(word: str, another: str, m_distance) -> bool:
     ed = DP5(word, another)
     return ed <= m_distance
